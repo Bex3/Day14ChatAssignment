@@ -37,7 +37,7 @@ public class ConnectionHandler implements Runnable{
 
 
     private void handleIncomingConnections(Socket incomingConnection) throws IOException {
-        IntSummaryStatistics serverListener = null;
+        //IntSummaryStatistics serverListener = null; //not sure what this is
 
         //Socket clientSocket = serverListener.accept(incomingConnection); //revisit this later
         System.out.println("Connected");
@@ -51,16 +51,23 @@ public class ConnectionHandler implements Runnable{
 
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-        // send the server an arbitrary message
-        out.println("I sent you a message - RBT");
-        // read what the server returns
-        String serverResponse = in.readLine();
-        String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-            System.out.println("Received message: " + inputLine + " from " + serverListener.toString());
-            out.println(out);
-        }
+        //if (){
+          //  System.out.println("Transmission error please try again later");
+         //   break;
+        //} else {
+
+            // send the server an arbitrary message
+            System.out.println("I sent you a message - RBT");
+            // read what the server returns
+            String serverResponse = in.readLine();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                System.out.println("Received message: " + inputLine + " from " + in.toString());
+                out.println(out);
+            }
+        //}
         // close the connection
         clientSocket.close();
     }
+
 }

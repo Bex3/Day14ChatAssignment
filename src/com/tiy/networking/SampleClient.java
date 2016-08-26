@@ -17,13 +17,13 @@ public class SampleClient {
 
         try{
 
-            Socket clientSocket = new Socket ("localhost", 8005); //connect to Brice
+            Socket clientSocket = new Socket ("localhost", 8024);
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true); //output
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //input - inputstream gives you the bits and bytes inputstreamreader gives us chars instead of bytes
                                         //bufferedReader allows for easier reading of the InputStreamReader content
-            out.println("Hi from Mars! ");
+            System.out.println("Please provide your name");
 
-            String briceServerResponse = in.readLine();
+            String serverResponse = in.readLine();
 
             clientSocket.close();
         } catch (IOException exception) {

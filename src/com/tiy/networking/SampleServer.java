@@ -26,7 +26,7 @@ public class SampleServer {
     public void StartServer() {
         System.out.println("Booting server");
         try {
-            ServerSocket serverListener = new ServerSocket(8005); //8005?
+            ServerSocket serverListener = new ServerSocket(8024); //8005?
             System.out.println("Ready to listen");
 
             while(true) {
