@@ -19,8 +19,8 @@ public class SampleClient {
 
             Socket clientSocket = new Socket ("localhost", 8005); //connect to Brice
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true); //output
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //input
-
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //input - inputstream gives you the bits and bytes inputstreamreader gives us chars instead of bytes
+                                        //bufferedReader allows for easier reading of the InputStreamReader content
             out.println("Hi from Mars! ");
 
             String briceServerResponse = in.readLine();
