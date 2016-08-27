@@ -17,8 +17,18 @@ import static sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStat
  * Created by bearden-tellez on 8/25/16.
  */
 
-public class ConnectionHandler implements Runnable{
+public class ConnectionHandler implements Runnable {
     Socket clientSocket = null;
+
+    public String getClientUserName() {
+        return clientUserName;
+    }
+
+    public void setClientUserName(String clientUserName) {
+        this.clientUserName = clientUserName;
+    }
+
+    private String clientUserName = null;
 
     public void run() {
         try {
@@ -54,33 +64,27 @@ public class ConnectionHandler implements Runnable{
 
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-            // send the server an arbitrary message
-            //System.out.println("I sent you a message - RBT");
-            out.println("Hello, please enter your name in the following format name=WhateverYourNameIs. If you would like to leave, please type exit at any time.");
-         // read what the server returns
-            //String serverResponse = in.readLine();
-            //String inputLine;
+        out.println("Hello, please enter your name in the following format name=WhateverYourNameIs.");
 
-
-
-            while (true) {
-                String serverResponse = in.readLine();
-                Scanner inputScanner = new Scanner(System.in);
-                String inputLine = inputScanner.nextLine();
-                if (inputLine != "name= ") {
-                    System.out.println("Transmission error please try again later");
-                    break;
-                } else if(inputLine.equals("exit")){
-                    break;
+        while (true) {
+            String serverResponse = in.readLine();
+            Scanner inputScanner = new Scanner(System.in);
+            String inputLine = inputScanner.nextLine();
+            if (getClientUserName() == null) {
+                if ((inputLine.split("=")[0]).equals("name")) {
+                    out.println("Your name is " + inputLine);
+                    setClientUserName(inputLine);
+                    System.out.println("Your name is " + getClientUserName());
+                    String newInputLine = inputScanner.nextLine();
+                    System.out.println((inputLine.split("=")[1]) + " said " + newInputLine); //in.toString())
                 } else {
-                    System.out.println("Received message: " + inputLine + " from " + in.toString());
-                    out.println(out);
+                    System.out.println("Transmission error please try again later");
+                    out.println("Transmission error please try again later");
+                    break;
                 }
-
             }
-        //}
-        // close the connection
+            //clientSocket.close();
+        }
         clientSocket.close();
     }
-
 }

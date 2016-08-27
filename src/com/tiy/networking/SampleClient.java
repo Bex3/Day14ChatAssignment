@@ -27,7 +27,7 @@ public class SampleClient {
 //            out.write("Hello");
 
             out.println("Please enter your name in this format name=whateverYourNameIs");
-            out.println("name=Rebecca");
+
             System.out.println("sent message asking for name");
 
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //input - inputstream gives you the bits and bytes inputstreamreader gives us chars instead of bytes
@@ -38,11 +38,14 @@ public class SampleClient {
             //out.println("Please enter your name in this format name=whateverYourNameIs");
             //System.out.println("sent message asking for name");
 
-            while(true) {
+            //while(true) {
                 String serverResponse = in.readLine();
                 System.out.println("Server response: " + serverResponse);
-                out.println("Please enter exit once finished");
-            }
+                serverResponse = in.readLine();
+                System.out.println("Server response: " + serverResponse);
+
+                //out.println("Please enter exit once finished");
+            //}
 
            // clientSocket.close();
         } catch (IOException exception) {
