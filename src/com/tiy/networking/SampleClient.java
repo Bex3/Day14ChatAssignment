@@ -1,5 +1,7 @@
 package com.tiy.networking;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,15 +19,32 @@ public class SampleClient {
 
         try{
 
-            Socket clientSocket = new Socket ("localhost", 8024);
+            Socket clientSocket = new Socket ("localhost", 8024); //"localhost", 8024 ;"10.0.0.129"
+            System.out.println("Connection established");
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true); //output
+            System.out.println("output stream initialized");
+
+//            out.write("Hello");
+
+            out.println("Please enter your name in this format name=whateverYourNameIs");
+            out.println("name=Rebecca");
+            System.out.println("sent message asking for name");
+
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //input - inputstream gives you the bits and bytes inputstreamreader gives us chars instead of bytes
                                         //bufferedReader allows for easier reading of the InputStreamReader content
-            System.out.println("Please provide your name");
+            System.out.println("input stream initialized");
 
-            String serverResponse = in.readLine();
+            //System.out.println("Please provide your name");
+            //out.println("Please enter your name in this format name=whateverYourNameIs");
+            //System.out.println("sent message asking for name");
 
-            clientSocket.close();
+            while(true) {
+                String serverResponse = in.readLine();
+                System.out.println("Server response: " + serverResponse);
+                out.println("Please enter exit once finished");
+            }
+
+           // clientSocket.close();
         } catch (IOException exception) {
             exception.printStackTrace(); //see the exception
         }
