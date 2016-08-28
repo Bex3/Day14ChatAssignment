@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class StringReverser {
 
     public static void main(String[] args) {
+
         Scanner inputScanner = new Scanner(System.in);
         System.out.println("Please enter a word that you would like to have reversed by the magical work reverser!");
         String testString = String.valueOf(inputScanner.nextLine());
@@ -20,9 +21,6 @@ public class StringReverser {
            System.out.print(charArray[counter]);
 
         }
-
-
-
 
     }
 
