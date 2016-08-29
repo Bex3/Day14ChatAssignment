@@ -10,7 +10,7 @@ public class StringReverser {
     public static void main(String[] args) {
 
         Scanner inputScanner = new Scanner(System.in);
-        System.out.println("Please enter a word that you would like to have reversed by the magical work reverser!");
+        System.out.println("Please enter a word that you would like to have reversed by the magical word reverser!");
         String testString = String.valueOf(inputScanner.nextLine());
         //String testString = "something";
         System.out.println("You input " + testString);
