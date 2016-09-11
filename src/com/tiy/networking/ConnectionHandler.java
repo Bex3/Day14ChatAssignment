@@ -32,15 +32,14 @@ public class ConnectionHandler implements Runnable {
 
     public void run() {
         try {
+//            PrintWriter outputToClient;
+//            BufferedReader inputFromClient;
             handleIncomingConnections(clientSocket);
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
         }
     }
 
-/*    public ConnectionHandler(){
-
-    }*/
 
     public ConnectionHandler(Socket incomingConnection) {
         this.clientSocket = incomingConnection;
@@ -48,43 +47,50 @@ public class ConnectionHandler implements Runnable {
 
 
     private void handleIncomingConnections(Socket incomingConnection) throws IOException {
-        //IntSummaryStatistics serverListener = null; //not sure what this is
 
-        //Socket clientSocket = serverListener.accept(incomingConnection); //revisit this later
         System.out.println("Connected");
 
-        System.out.println("clientSocket = " + clientSocket);
+        System.out.println("clientSocket = " + incomingConnection);
 
-        System.out.println("Connected with " + clientSocket.getInetAddress().getHostAddress());
+        System.out.println("Connected with " + incomingConnection.getInetAddress().getHostAddress());
 
-        String name = clientSocket.getInetAddress().getHostAddress();
+        //String name = clientSocket.getInetAddress().getHostAddress();
 
         // once we connect to the server, we also have an input and output stream
-        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+        PrintWriter out = new PrintWriter(incomingConnection.getOutputStream(), true);
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(incomingConnection.getInputStream()));
 
-        out.println("Hello, please enter your name in the following format name=WhateverYourNameIs.");
 
+        //out.println("Hello, please enter your name in the following format name=WhateverYourNameIs.");
+
+        String clientName = in.readLine();
+
+        System.out.println(clientName);
+
+        this.clientUserName = (clientName.split("=") [1]);
+        System.out.println(clientUserName);
+        out.println("Nice to meet you" + clientUserName);
+
+        //Scanner inputScanner = new Scanner(System.in);
+
+        String clientInput;
         while (true) {
-            String serverResponse = in.readLine();
-            Scanner inputScanner = new Scanner(System.in);
-            String inputLine = inputScanner.nextLine();
-            if (getClientUserName() == null) {
-                if ((inputLine.split("=")[0]).equals("name")) {
-                    out.println("Your name is " + inputLine);
-                    setClientUserName(inputLine);
-                    System.out.println("Your name is " + getClientUserName());
-                    String newInputLine = inputScanner.nextLine();
-                    System.out.println((inputLine.split("=")[1]) + " said " + newInputLine); //in.toString())
+            if (clientUserName != null && (clientInput= in.readLine()) != null) {
+                //String clientResponse = in.readLine();
+                    //out.println("Your name is " + clientUserName);
+                    //setClientUserName(inputLine);
+                    //System.out.println("Your name is " + getClientUserName());
+                    //String newInputLine = inputScanner.nextLine();
+                    System.out.println(clientUserName + " said " + clientInput); //in.toString())
+                    out.println("Message received: " + clientInput);
                 } else {
                     System.out.println("Transmission error please try again later");
                     out.println("Transmission error please try again later");
                     break;
                 }
             }
-            //clientSocket.close();
+            clientSocket.close();
         }
-        clientSocket.close();
-    }
+        //clientSocket.close();
 }
